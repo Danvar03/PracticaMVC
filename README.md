@@ -2,7 +2,7 @@
 ## Practica MVC | Javascript | SofkaU
  
 
-
+# URL : https://danvar03.github.io/PracticaMVC/
 ### Funcionamiento
 Este es un juego de ping pong donde se utilizan los siguientes modelos,metodos y librerias
 ##### Version 1.0.00
