@@ -106,6 +106,7 @@ userScore.src = "sounds/userScore.mp3";
         },
 
         collision: function (bar) {
+            hit.play();
 
             var relative_intersect_y = (bar.y + (bar.height / 2)) - this.y;
             var normalized_intersect_y = relative_intersect_y / (bar.height / 2);
@@ -176,28 +177,6 @@ userScore.src = "sounds/userScore.mp3";
                 this.board.ball.speed_y = this.board.ball.speed_y * -1;
             }
 
-            if (this.board.ball.x >= 815)
-                if (this.board.ball.x <= -15) {
-
-                    board.playing = !board.playing;
-                    this.board.ball.x = 350;
-                    this.board.ball.y = 150;
-                    this.board.bars.y = 100;
-                    this.board.ball.speed = 3;
-                    board_view.draw();
-                    this.board.ball.speed_x = this.board.ball.speed_x * -1;
-
-                }
-            if (this.board.ball.x >= 815) {
-                board.playing = !board.playing;
-                this.board.ball.x = 350;
-                this.board.ball.y = 150;
-                //this.board.bar.y = 100;               
-                this.board.ball.speed = 3;
-                board_view.draw();
-                this.board.ball.speed_x = this.board.ball.speed_x * -1;
-
-            }
         },
 
         play: function () {
@@ -242,7 +221,7 @@ userScore.src = "sounds/userScore.mp3";
                 } catch (error) { alert(error); }
                 break;
             case "circle":
-                ctx.fillStyle = "red";
+                ctx.fillStyle = "yellow";
                 ctx.beginPath();
                 ctx.arc(element.x, element.y, element.radio, 0, 7);
                 ctx.fill();
@@ -253,13 +232,13 @@ userScore.src = "sounds/userScore.mp3";
 })();
 
 var board = new Board(800, 400);
-var bar = new Bar(20, 140, 40, 100, board); // Barra derecha
+var bar = new Bar(20, 140, 25, 100, board); // Barra derecha
 
-var bar2 = new Bar(735, 140, 40, 100, board); //Barra izquierda
+var bar2 = new Bar(735, 140, 25, 100, board); //Barra izquierda
 var canvas = document.getElementById('canvas');
 
 var board_view = new BoardView(canvas, board);
-var ball = new Ball(400, 200, 18, board); //Pelota
+var ball = new Ball(400, 200, 12, board); //Pelota
 
 document.addEventListener("keydown", function (ev) {
 
