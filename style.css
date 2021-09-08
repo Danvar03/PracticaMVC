@@ -8,17 +8,19 @@ canvas {
     border-color: rgb(252, 249, 249);
 }
 body {
-    background-color: rgb(7, 75, 18);
+    background-color: rgb(8, 80, 20);
 }
 .jugador_1{
-    margin-left: 50px;
+    margin-left: 700px;
     color: #dbdbdb;
+
 }
 .puntaje_1{
-    margin-left: 100px;
+    text-align: center;
+    margin-left: 20px;
     color: #ff3300;
 }
 .puntaje{
-    margin-left: 50px;
+    text-align: center;
     color: #eca049;
 }

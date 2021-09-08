@@ -296,6 +296,7 @@ function reiniciar() { // Funcion para reiniciar el juego
    }
 }
 
+
 function controller() {
 
     board_view.play();
