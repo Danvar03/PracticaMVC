@@ -21,7 +21,7 @@
     self.Board.prototype = {
         //Geter(Seran las barras)
         get elements() {
-            var elements = this.bars;
+            var elements = this.bars.map(function(bar) { return bar; });
             //Se agrega una pelota
             elements.push(this.ball);
             return elements;
@@ -29,6 +29,28 @@
     }
 })();
 
+
+(function() {
+    self.Ball = function(x, y, radius, board) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.board = board;
+            this.speed_y = 0;
+            this.speed_x = 3;
+            this.board = board;
+            this.direction = 1;
+            board.ball = this;
+            this.kind = "circle";
+        }
+        //Haremos que la pelota se mueva
+    self.Ball.prototype = {
+        move: function() {
+            this.x += (this.speed_x * this.direction);
+            this.y += (this.speed_y);
+        }
+    }
+})();
 //Se generara Dibuja las barras
 (function () {
        self.Bar = function (x, y, width, height, board) {
@@ -74,6 +96,11 @@
 
                 draw(this.ctx, el);
             };
+        },
+        play: function(){
+            this.clean();
+            this.draw();
+            this.board.ball.move();
         }
     }
 
@@ -98,20 +125,33 @@ var canvas = document.getElementById('canvas');
 var board_view = new BoardView(canvas, board);
 
 document.addEventListener("keydown", function(ev) {
-    console.log(ev.keyCode);    
-    if (ev.keyCode == 38) {
+    if (ev.keyCode === 38) {
+        ev.preventDefault();
         bar.up();
-    } else if (ev.keyCode == 40) {
+    } else if (ev.keyCode === 40) {
+        ev.preventDefault();
         bar.down();
+    } else if (ev.keyCode === 87) {
+        ev.preventDefault();
+        bar_2.up();
+    } else if (ev.keyCode === 83) {
+        ev.preventDefault();
+        bar_2.down();
+    } else if (ev.keyCode === 32) {
+        ev.preventDefault();
+        board.playing = !board.playing;
     }
+    
+    
+    board_view.draw();
 });
 
-//Aca esta pendiente de que cargue la pagina cuando carga llama el metodo main
-self.addEventListener("load", main);
+window.requestAnimationFrame(controller);
+setTimeout(function() {
+    ball.direction = -1;
+}, 3000);
 
-function main() {
-
-    board_view.draw();
-    console.log(board);
+function controller() {
+    board_view.play();
 
 }
