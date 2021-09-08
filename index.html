@@ -7,23 +7,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilo.css">
     <title>Ping Pong</title>
-    <style>
-        canvas {
-            border: solid;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
 </head>
-
-<body >
+<link rel="stylesheet" href="style.css">
+<style>
+    body {
+        background-color: rgb(7, 75, 18);
+    }
+</style>
+<body>
     <div class="text-center">
-        <h1>Juego Ping Pong</h1>
-        
-    <div class="text-center mt-5">
-        <canvas id="canvas"></canvas>
+        <h1>Juego Ping Pong </h1>
+        <h3>Daniela Vargas Mendoza Sofka U</h3>
+        <div class="row mt-5 mb-5">
+            <div>
+                <div class="start" id="start">
+                    <h3>🐱‍👤 Start Game 🐱‍👤</h3>
+                    <class style="color: #e0e1e2;">
+                        <div class="" id="instrucciones">
+                            <h2>Instrucciones: </h2>
+                            <p class="pt-2">Para iniciar el juego o pausarlo presione la barra espaciadora</p>
+                            <p class="pt-2">Para mover la barra derecha presione ↑(arriba) y ↓(abajo)</p>
+                            <p class="pt-2">Para mover la barra izquiera presione W(arriba) y S(abajo)</p>
+                        </div>
+                    </class>
+                </div>
+            </div>
+        </div>
     </div>
-
+    <div>
+        <class>
+            
+            <div>
+                <div>
+                    <h3>Puntaje Jugador 1</h3>
+                    <h2 id="puntosJugador1">0</h2>
+                </div>
+                <div>
+                    <h3>Puntaje jugador 2</h3>
+                    <h2 id="puntosJugador2">0</h2>
+                </div>
+        </class>
+        <canvas id="canvas"></canvas>
+        
+    </div>
     <script src="main.js"></script>
-
 </body>
 
 </html>

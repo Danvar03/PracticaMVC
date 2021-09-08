@@ -1,4 +1,16 @@
 //practica javaScript juego ping pon
+
+let hit = new Audio();
+let wall = new Audio();
+let userScore = new Audio();
+let comScore = new Audio();
+
+hit.src = "sounds/hit.mp3";
+wall.src = "sounds/wall.mp3";
+comScore.src = "sounds/comScore.mp3";
+userScore.src = "sounds/userScore.mp3";
+
+
 (function () {
     self.Board = function (width, height) {
         this.width = width;
@@ -102,16 +114,20 @@
             this.speed_y = this.speed * -Math.sin(this.bounce_angle);
             this.speed_x = this.speed * Math.cos(this.bounce_angle);
 
-            if (this.x > (this.board.width / 2))
-             this.direction = -1;                       
-           
-            else this.direction = 1;
-            //this.spped +=1;
+            if (this.x > (this.board.width / 2)) {
+                this.direction = -1;
+                this.spped += 1;
+            }
+
+            else {
+                this.direction = 1;
+                this.spped += 1;
+            }
         }
     }
 })();
 
-(function () {
+(function (net) {
     self.BoardView = function (canvas, board) {
         this.canvas = canvas;
         this.canvas.width = board.width;
@@ -120,15 +136,25 @@
         this.ctx = canvas.getContext("2d");
     }
 
+
     self.BoardView.prototype = {
         clean: function () {
             this.ctx.clearRect(0, 0, this.board.width, this.board.height);
         },
+        
+        
+        // draw the net
+        drawNet: function() {
+            for (let i = 0; i <= canvas.height; i += 15) {
+                
+                
+                drawRect(net.x, net.y + i, net.width, net.height, net.color);
+            }
+        },        
 
         draw: function () {
             for (var i = this.board.elements.length - 1; i >= 0; i--) {
                 var el = this.board.elements[i];
-
                 draw(this.ctx, el);
             };
         },
@@ -142,12 +168,35 @@
                 }
             };
 
-            if (this.board.ball.y <= 0) {   //Condicionales para que la pelota rebote en los laterales
+            if (this.board.ball.y <= 10) {   //Condicionales para que la pelota rebote en los laterales
                 this.board.ball.speed_y = this.board.ball.speed_y * -1;
             }
 
-            if (this.board.ball.y >= 400) {
+            if (this.board.ball.y >= 390) {
                 this.board.ball.speed_y = this.board.ball.speed_y * -1;
+            }
+
+            if (this.board.ball.x >= 815)
+                if (this.board.ball.x <= -15) {
+
+                    board.playing = !board.playing;
+                    this.board.ball.x = 350;
+                    this.board.ball.y = 150;
+                    this.board.bars.y = 100;
+                    this.board.ball.speed = 3;
+                    board_view.draw();
+                    this.board.ball.speed_x = this.board.ball.speed_x * -1;
+
+                }
+            if (this.board.ball.x >= 815) {
+                board.playing = !board.playing;
+                this.board.ball.x = 350;
+                this.board.ball.y = 150;
+                //this.board.bar.y = 100;               
+                this.board.ball.speed = 3;
+                board_view.draw();
+                this.board.ball.speed_x = this.board.ball.speed_x * -1;
+
             }
         },
 
@@ -182,15 +231,18 @@
         return hit;
     }
 
+
     function draw(ctx, element) {
         switch (element.kind) {
 
             case "rectangle":
                 try {
+                    ctx.fillStyle = "black";
                     ctx.fillRect(element.x, element.y, element.width, element.height);
                 } catch (error) { alert(error); }
                 break;
             case "circle":
+                ctx.fillStyle = "red";
                 ctx.beginPath();
                 ctx.arc(element.x, element.y, element.radio, 0, 7);
                 ctx.fill();
@@ -207,7 +259,7 @@ var bar2 = new Bar(735, 140, 40, 100, board); //Barra izquierda
 var canvas = document.getElementById('canvas');
 
 var board_view = new BoardView(canvas, board);
-var ball = new Ball(400, 200, 10, board); //Pelota
+var ball = new Ball(400, 200, 18, board); //Pelota
 
 document.addEventListener("keydown", function (ev) {
 
@@ -217,7 +269,7 @@ document.addEventListener("keydown", function (ev) {
     }
     else if (ev.keyCode == 40) {
         ev.preventDefault(); //Ventana del navegador estático
-        bar2.down(); 
+        bar2.down();
     }
     else if (ev.keyCode == 87) {
         //Key W
@@ -241,28 +293,28 @@ var puntosJugador1 = document.getElementById("puntosJugador1"); //Variables que 
 var puntosJugador2 = document.getElementById("puntosJugador2");
 
 function reiniciar() { // Funcion para reiniciar el juego 
-    if (ball.x >= 800 || ball.x <= 0) {
-        if (ball.x >= 800) {
-            alert("Ganó el jugador 1");
-            puntosJugador1.innerHTML = (Number(puntosJugador1.innerHTML) + 1)
-        }
-        if (ball.x <= 0) {
-            alert("Ganó el jugador 2");
-            puntosJugador2.innerHTML = (Number(puntosJugador2.innerHTML) + 1)
-        }
-        bar.x = 20;
-        bar.y = 140;
-        bar2.x = 735;
-        bar2.y = 140;
-        ball.x = 400;
-        ball.y = 200;
-        ball.direction = 1;
-        ball.bounce_angle = 0;
-        ball.speed_x = 2;
-        ball.speed_y = 0;
-        ball.max_bounce_angle = Math.PI / 12;
-        board.playing = !board.playing;
-    }
+   if (ball.x >= 800 || ball.x <= 0) {
+       if (ball.x >= 800) {
+           alert("Ganó el jugador 1");
+           puntosJugador1.innerHTML = (Number(puntosJugador1.innerHTML) + 1)
+       }
+       if (ball.x <= 0) {
+           alert("Ganó el jugador 2");
+           puntosJugador2.innerHTML = (Number(puntosJugador2.innerHTML) + 1)
+       }
+       bar.x = 20;
+       bar.y = 140;
+       bar2.x = 735;
+       bar2.y = 140;
+       ball.x = 400;
+       ball.y = 200;
+       ball.direction = 1;
+       ball.bounce_angle = 0;
+       ball.speed_x = 2;
+       ball.speed_y = 0;
+       ball.max_bounce_angle = Math.PI / 12;
+       board.playing = !board.playing;
+   }
 }
 
 function controller() {
@@ -272,4 +324,5 @@ function controller() {
     board_view.draw();
     window.requestAnimationFrame(controller);
     reiniciar();
+    drawNet();
 }
